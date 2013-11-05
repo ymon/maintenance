@@ -4,7 +4,12 @@ enchant();
 /*
  * 定数
  */
+//var DEBUG = 1;
+
 var IMAGE_PLAYER         = "./img/panda.png";
+var IMAGE_FOUNDER1       = "./img/panda.png";
+var IMAGE_FOUNDER2       = "./img/panda.png";
+var IMAGE_FOUNDER3       = "./img/panda.png";
 var IMAGE_ITEM1          = "./img/img_item01.png";
 var IMAGE_ITEM2          = "./img/img_item02.png";
 var IMAGE_ITEM3          = "./img/img_item03.png";
@@ -23,6 +28,9 @@ var IMAGE_PROGRESS_BOX   = "./img/img_bubble.png";
 var IMAGE_START          = "./img/img_start.png";
 var ASSETS = [
 	IMAGE_PLAYER,
+	IMAGE_FOUNDER1,
+	IMAGE_FOUNDER2,
+	IMAGE_FOUNDER3,
 	IMAGE_WALL1,
 	IMAGE_WALL2,
 	IMAGE_ITEM1,
@@ -42,21 +50,22 @@ var ASSETS = [
 
 ];
 //var IMAGE_= "";
-var SCREEN_WIDTH		= 960;		// スクリーン幅
-var SCREEN_HEIGHT		= 640;		// スクリーン高さ
-var BACKGROUND_WIDTH	= 960 * 3;		// 背景幅
-var BACKGROUND_HEIGHT 	= 640;		// 背景高さ
-var BACKGROUND_COLLOR 	= "#000";	// 背景色
-var GAME_SPEED			= 6;		// ゲーム全体のスピード
-var GAME_FPS			= 24;		// Frame / Sec
-var GAME_TIME_LIMIT		= GAME_FPS * 80;
+var SCREEN_WIDTH      = 960;		// スクリーン幅
+var SCREEN_HEIGHT     = 640;		// スクリーン高さ
+var BACKGROUND_WIDTH  = 960 * 3;	// 背景幅
+var BACKGROUND_HEIGHT = 640;		// 背景高さ
+var BACKGROUND_COLLOR = "#000";		// 背景色
+var GAME_SPEED        = 6;			// ゲーム全体のスピード
+var GAME_FPS          = 24;			// Frame / Sec
+var GAME_TIME_LIMIT   = GAME_FPS * 80;
 
 // グローバル変数定義
 var global = {
-	game		: null,
-	player		: null,
-	score		: null,
-	founder		: 0
+	game     : null,
+	player   : null,
+	score    : null,
+	founder  : 0,
+	progress : 0
 };
 
 /*
@@ -66,6 +75,22 @@ var global = {
 var randfloat = function( min, max ) {
     return Math.random() * ( max - min ) + min;
 };
+
+var randInt = function( min, max ) {
+	return Math.floor( Math.random() * ( max - min + 1 ) ) + min;
+}
+
+var debug = {
+	isDebug : function() {
+		return typeof DEBUG != "undefined";
+	},
+	log : function( string ){
+		if ( this.isDebug() ) {
+			console.log( string );
+		}
+	}
+}
+
 
 window.onload = function() {
 	global.game = new Game( SCREEN_WIDTH, SCREEN_HEIGHT );
@@ -77,7 +102,8 @@ window.onload = function() {
 		global.game.replaceScene( createGameScene() );
 	};
 
-	console.log( "game start" );
+	debug.log( "game start" );
+
 	global.game.start();
 
 };
