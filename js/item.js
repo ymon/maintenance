@@ -27,7 +27,8 @@ var Item = Class.create(Sprite, {
     // 更新処理
     onenterframe: function() {
         // 移動
-        this.x += ITEM_SPEED;
+        if (global.player.state == 1)
+            this.x += ITEM_SPEED;
                
         
         // 衝突判定

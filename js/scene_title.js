@@ -6,7 +6,7 @@ var createTitleScene = function() {
 		
 		//scene.backgroundColor = BACKGROUND_COLLOR;      // シーンの背景色を設定
 		
-		var startImage = new Sprite(300, 100);  //スタート画像のスプライト
+		var startImage = new Sprite( 300, 100 );  //スタート画像のスプライト
 		
 		startImage.image = global.game.assets[IMAGE_START];  
 		

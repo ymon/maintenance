@@ -4,35 +4,37 @@ enchant();
 /*
  * 定数
  */
-//var DEBUG = 1;
+var DEBUG = 1;
 
-var IMAGE_PLAYER         = "./img/panda.png";
-var IMAGE_FOUNDER1       = "./img/panda.png";
-var IMAGE_FOUNDER2       = "./img/panda.png";
-var IMAGE_FOUNDER3       = "./img/panda.png";
-var IMAGE_ITEM1          = "./img/img_item01.png";
-var IMAGE_ITEM2          = "./img/img_item02.png";
-var IMAGE_ITEM3          = "./img/img_item03.png";
-var IMAGE_ITEM4          = "./img/img_item04.png";
-var IMAGE_ITEM5          = "./img/img_item05.png";
-var IMAGE_WALL1          = "./img/img_barrier01.png";
-var IMAGE_WALL2          = "./img/img_barrier02.png";
-var IMAGE_BACKGROUND1    = "./img/img_back1.png";
-var IMAGE_BACKGROUND2    = "./img/img_back2.png";
-var IMAGE_BACKGROUND3    = "./img/img_back3.png";
-var IMAGE_BACKGROUND4    = "./img/img_back4.png";
-var IMAGE_PROGRESS_PANDA = "./img/img_progress_panda.png";
-var IMAGE_PROGRESS_BAR   = "./img/img_progress_bar.png";
-var IMAGE_PROGRESS_BACK  = "./img/img_progress02.png";
-var IMAGE_PROGRESS_BOX   = "./img/img_bubble.png";
-var IMAGE_START          = "./img/img_start.png";
+var IMAGE_PLAYER           = "./img/panda.png";
+var IMAGE_FOUNDER_KASHIMA  = "./img/img_founder_kashima.png";
+var IMAGE_FOUNDER_KITAZAWA = "./img/img_founder_kitazawa.png";
+var IMAGE_FOUNDER_OHMAE    = "./img/img_founder_ohmae.png";
+var IMAGE_ITEM1            = "./img/img_item01.png";
+var IMAGE_ITEM2            = "./img/img_item02.png";
+var IMAGE_ITEM3            = "./img/img_item03.png";
+var IMAGE_ITEM4            = "./img/img_item04.png";
+var IMAGE_ITEM5            = "./img/img_item05.png";
+var IMAGE_WALL1            = "./img/img_barrier01.png";
+var IMAGE_WALL2            = "./img/img_barrier02.png";
+var IMAGE_WALL3            = "./img/img_barrier03.png";
+var IMAGE_BACKGROUND1      = "./img/img_back1.png";
+var IMAGE_BACKGROUND2      = "./img/img_back2.png";
+var IMAGE_BACKGROUND3      = "./img/img_back3.png";
+var IMAGE_BACKGROUND4      = "./img/img_back4.png";
+var IMAGE_PROGRESS_PANDA   = "./img/img_progress_panda.png";
+var IMAGE_PROGRESS_BAR     = "./img/img_progress_bar.png";
+var IMAGE_PROGRESS_BACK    = "./img/img_progress02.png";
+var IMAGE_PROGRESS_BOX     = "./img/img_bubble.png";
+var IMAGE_START            = "./img/img_start.png";
 var ASSETS = [
 	IMAGE_PLAYER,
-	IMAGE_FOUNDER1,
-	IMAGE_FOUNDER2,
-	IMAGE_FOUNDER3,
+	IMAGE_FOUNDER_KASHIMA,
+	IMAGE_FOUNDER_KITAZAWA,
+	IMAGE_FOUNDER_OHMAE,
 	IMAGE_WALL1,
 	IMAGE_WALL2,
+	IMAGE_WALL3,
 	IMAGE_ITEM1,
 	IMAGE_ITEM2,
 	IMAGE_ITEM3,
