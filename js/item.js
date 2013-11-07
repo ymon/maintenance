@@ -27,6 +27,7 @@ var Item = Class.create(Sprite, {
     // 更新処理
     onenterframe: function() {
         // 移動
+
         this.x -= ITEM_SPEED;
                
         
