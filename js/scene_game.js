@@ -6,39 +6,58 @@ var createGameScene = function() {
 	var scene = new Scene();
 	scene.backgroundColor = BACKGROUND_COLLOR;
 
-    // スコアラベルを作成
-    var scoreLabel = new Label();
+    // プレイヤーを作成
+    global.player = new Player();
 
-	// 背景処理
-    scene.bgState = 1;
+    // ファウンダーを作成
+    var kashimaPet = new KashimaPet();
+    var kitazawaPet = new KitazawaPet();
+    var ohmaePet = new OhmaePet();
+
+    // 背景処理
 	var background = new Sprite( BACKGROUND_WIDTH, BACKGROUND_HEIGHT );
     background.image = global.game.assets[ IMAGE_BACKGROUND1 ];
     background.moveTo( 0, 0 );
+    background.state = 1;       // 現在の背景画像の番号
+    background.move = true;     // 背景を動かすフラグ
     background.onenterframe = function() {
     	// スクロール
-        this.x -= GAME_SPEED / 2;
-        // 端まで行ったら戻す
-        if (this.x <= - ( BACKGROUND_WIDTH - SCREEN_WIDTH ) ) {
+        if ( background.move ) {
+            this.x -= GAME_SPEED / 2;
+            // 端まで行ったら戻す
+            if (this.x <= - ( BACKGROUND_WIDTH - SCREEN_WIDTH ) ) {
 
-            switch ( scene.bgState ){
-                case 1:
-                    if ( scene.progress > 0.3 ) {
-                        background.image = global.game.assets[ IMAGE_BACKGROUND2 ];
-                        scene.bgState = 2;
-                    }
-                    break;
-                case 2:
-                    background.image = global.game.assets[ IMAGE_BACKGROUND3 ];
-                    scene.bgState = 3;
-                    break;
-                case 3:
-                    if ( scene.progress >= 0.8 ){
-                        background.image = global.game.assets[ IMAGE_BACKGROUND4 ];
-                        scene.bgState = 4;
-                    }
-
+                switch ( background.state ){
+                    case 1:         // 背景：町
+                        if ( global.progress > 0.3 ) {
+                            background.image = global.game.assets[ IMAGE_BACKGROUND2 ];
+                            background.state = 2;
+                        }
+                        break;
+                    case 2:         // 背景：グラデ
+                        background.image = global.game.assets[ IMAGE_BACKGROUND3 ];
+                        background.state = 3;
+                        break;
+                    case 3:         // 背景：森
+                        if ( global.progress >= 0.8 ){
+                            background.image = global.game.assets[ IMAGE_BACKGROUND4 ];
+                            background.state = 4;
+                        }
+                }
+            	background.moveTo( 0, 0 );
             }
-        	background.moveTo( 0, 0 );
+
+            // 死亡判定
+            if ( global.player.state == 2 ) {
+                background.move = false;
+            }
+
+            // ゴール判定
+            if ( background.state == 4 && this.x < -960 ){
+                background.move = false;
+                global.player.state = 3;
+            }
+
         }
     };
     scene.addChild( background );
@@ -50,77 +69,59 @@ var createGameScene = function() {
 		global.game.frame = 0;
 
         // 進捗を初期化
-        scene.progress = 0;
+        global.progress = 0;
 
 		// プレイヤーを表示
-        global.player = new Player();
 		scene.addChild( global.player );
 
-		// 進捗バー（しましま）を表示
-		progBack = new Sprite( 423, 33 );
-        progBack.image = global.game.assets[ IMAGE_PROGRESS_BACK ];
-        progBack.frame = 0;
-        progBack.framecount = 0;
-        progBack.moveTo( 510, 570 );
-        progBack.onenterframe = function(){
-            progBack.framecount = ++this.framecount % 10;
-            progBack.frame = Math.floor( progBack.framecount / 2 );
-        }
-        scene.addChild( progBack );
-
-        // 進捗バー（パンダ）を表示
-        progFront  = new Sprite( 70, 53 );
-        progFront.image = global.game.assets[ IMAGE_PROGRESS_PANDA ];
-        progFront.frame = 0;
-        progFront.framecount = 0;
-        progFront.moveTo( 510, 570 - 15 );
-        progFront.onenterframe = function() {
-            this.framecount = ++this.framecount % 10;
-            this.frame = Math.floor( this.framecount / 5 );
-            progFront.moveTo( 510 + Math.floor( scene.progress * 293 ), 570 - 15 );
-        }
-        scene.addChild( progFront );
+        // ファウンダーを表示
+        scene.addChild( kashimaPet );
+        scene.addChild( kitazawaPet );
+        scene.addChild( ohmaePet );
 
         // 進捗バーを表示
-        progBar = new Sprite( 1, 53 );
-        progBar.image = global.game.assets[ IMAGE_PROGRESS_BAR ];
-        progBar.frame = 0;
-        progBar.moveTo( 510, 570 - 15 );
-        progBar.onenterframe = function() {
-            progBar.image = global.game.assets[ IMAGE_PROGRESS_BAR ];
-            progBar.scale( 1, 1 );
-            progBar.scale( Math.floor( scene.progress * 293 ) + 1, 1);
-        }
-//        scene.addChild( progBar );
+        scene.addChild( new ProgressBack() );
+        scene.addChild( new ProgressBox() );
+        scene.addChild( new ProgressPanda() );
 
-        // 進捗ふきだしを作成
-        progBox = new Sprite( 233, 82 );
-        progBox.image = global.game.assets[IMAGE_PROGRESS_BOX ];
-        progBox.frame = 0;
-        progBox.moveTo( 705, 490 );
-        scene.addChild( progBox );
-
-        global.score = 0;
-        scoreLabel.font = "48px Tahoma";
-        scoreLabel.color = "#054aa7";
-        scoreLabel.moveTo(715, 500);
-        scoreLabel.text = global.score;
-		scene.addChild(scoreLabel);
-
-        dbgLabel = new Label();
-        dbgLabel.color = "white";
-        dbgLabel.moveTo( 10, 10 );
-        dbgLabel.onenterframe = function() {
-            dbgLabel.text = Math.floor( scene.progress * 100 ) + " %";
+        // スコアを表示
+        var progressLabel = new Label();
+        progressLabel.font = "48px Tahoma";
+        progressLabel.color = "#054aa7";
+        progressLabel.moveTo( 715, 500 );
+        progressLabel.onenterframe = function() {
+            this.text = createScoreText( global.score );
         };
-        scene.addChild( dbgLabel );
+        scene.addChild( progressLabel );
+
+        if ( debug.isDebug() ) {
+            dbgLabel = new Label();
+            dbgLabel.color = "white";
+            dbgLabel.moveTo( 10, 10 );
+            dbgLabel.onenterframe = function() {
+                dbgLabel.text = Math.floor( global.progress * 100 ) + " %";
+            };
+            scene.addChild( dbgLabel );
+        }
 
     };
 
     // 画面タッチ時の処理
     scene.ontouchstart = function(){
-        if(!global.player.isJump()){
+        if( global.player.state == 1 && !global.player.isJump() ){
         	global.player.jump();
+            if ( kashimaPet.exist )
+                kashimaPet.jump();
+            else
+                kashimaPet.insert(1);
+            if ( kitazawaPet.exist )
+                kitazawaPet.jump();
+            else
+                kitazawaPet.insert(2);
+            if ( ohmaePet.exist )
+                ohmaePet.jump();
+            else
+                ohmaePet.insert(3);
         }
     };
 
@@ -128,11 +129,11 @@ var createGameScene = function() {
     scene.onenterframe = function() {
 
         // ゲームのリミット確認
-        if ( global.game.frame < GAME_TIME_LIMIT ) {
+        if ( global.player.state == 1 && global.game.frame < GAME_TIME_LIMIT ) {
 
         	// TODO アイテム生成•表示
             if ( global.game.frame % 50 == 0 ) {
-                console.log("item created");
+                debug.log("item created");
                 var item;
                 if ( ( randfloat(0, 2) | 0) == 0 ) {
                     item = new Heart();
@@ -175,17 +176,28 @@ var createGameScene = function() {
                 wall.moveTo( SCREEN_WIDTH + 30, 390 );
                 scene.addChild( wall );
             }
+            if ( global.game.frame % 100 == 20 ) {
+                var wall = new Wall3();
+                wall.moveTo( SCREEN_WIDTH + 30, 390 - PLAYER_JUMP );
+                scene.addChild( wall );
+            }
+
 
             // スコアを増やす
             if (global.game.frame % 2 == 1 ){
-                global.score++;
+                global.score += global.founder + 1;
             }
-
-            // スコア表示を更新
-            scoreLabel.text = createScoreText( global.score );
 
             // 進捗の更新
             global.progress = global.game.frame / GAME_TIME_LIMIT;
+
+        } else if ( global.player.state == 2 ) {
+            // ゲーム進行度が100%になったらゲーム終了処理に入る
+                global.player.tl.moveBy( 0, -400, 200, enchant.Easing.LINEAR );
+                if ( global.player.y == 1 );
+                    // TODO ゲームリザルトの表示
+        }else if ( global.player.state == 3 ){
+
         }
 
     };
@@ -200,7 +212,7 @@ var createScoreText = function ( score ){
     for (var i = 0; i < 5; i++ ) {
         if ( score >= temp )
             break;
-        text = "0" + text;
+        text = " " + text;
         temp /= 10;
     }
     text = " " + text;
