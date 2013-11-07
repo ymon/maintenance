@@ -10,12 +10,12 @@ var createGameScene = function() {
     global.player = new Player();
 
     // ファウンダーを作成
-    var kashimaPet = new KashimaPet();
-    var kitazawaPet = new KitazawaPet();
-    var ohmaePet = new OhmaePet();
+    var kashimaPet	 = new KashimaPet();
+    var kitazawaPet	 = new KitazawaPet();
+    var ohmaePet	 = new OhmaePet();
 
     // 背景処理
-	var background = new Sprite( BACKGROUND_WIDTH, BACKGROUND_HEIGHT );
+    var background = new Sprite( BACKGROUND_WIDTH, BACKGROUND_HEIGHT );
     background.image = global.game.assets[ IMAGE_BACKGROUND1 ];
     background.moveTo( 0, 0 );
     background.state = 1;       // 現在の背景画像の番号
@@ -131,7 +131,7 @@ var createGameScene = function() {
         // ゲームのリミット確認
         if ( global.player.state == 1 && global.game.frame < GAME_TIME_LIMIT ) {
 
-        	// TODO アイテム生成•表示
+        	// アイテム生成•表示
             if ( global.game.frame % 50 == 0 ) {
                 debug.log("item created");
                 var item;
@@ -143,24 +143,24 @@ var createGameScene = function() {
                 //var item = new Item1();
 		var item2;
 		
-		console.log(global.progress, global.progress);
-		if ( Math.floor(global.progress * 100) == 10 ) {
-		console.log(global.progress);		    
-		    item2 = new Founder1();	    
-		}else if (Math.floor(global.progress * 100) == 50 ) {
+		console.log(global.progress);
+		if ( Math.floor(global.progress * 100) == 25 ) {
+		    item2 = new Founder1();
+		} else if ( Math.floor(global.progress * 100) == 50 ) {
 		    item2 = new Founder2();
-		}else if (Math.floor(global.progress * 100) == 75 ) {
+		} else if ( Math.floor(global.progress * 100) == 75 ) {
 		    item2 = new Founder3();
 		} else {
 		}
-		console.log(global.progress);
+
 		
-                item.moveTo( SCREEN_WIDTH + 30, PLAYER_POS_Y - PLAYER_JUMP + randInt( 30 , PLAYER_HEIGHT * 2 ));
-                scene.addChild( item );
-		console.log('停止', item2);
 		if (item2) {
-		    item2.moveTo( SCREEN_WIDTH + 30, PLAYER_POS_Y - PLAYER_JUMP + randInt( 30 , PLAYER_HEIGHT * 2 ));
+		    item2.moveTo( SCREEN_WIDTH + 30, PLAYER_POS_Y - PLAYER_JUMP + PLAYER_HEIGHT * -1 );
 		    scene.addChild( item2 );
+		}  else {
+		    item.moveTo( SCREEN_WIDTH + 30, PLAYER_POS_Y - PLAYER_JUMP + randInt( 30 , PLAYER_HEIGHT * 2 ));
+		    scene.addChild( item );
+		    console.log(global.progress, 100);
 		}
 		console.log('停止', 2);
             }
