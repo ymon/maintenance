@@ -100,8 +100,8 @@ window.onload = function() {
 	global.game.fps = GAME_FPS;
 
 	global.game.onload = function() {
-//		global.game.replaceScene( createTitleScene() );
-		global.game.replaceScene( createGameScene() );
+		global.game.replaceScene( createTitleScene() );
+//		global.game.replaceScene( createGameScene() );
 	};
 
 	debug.log( "game start" );

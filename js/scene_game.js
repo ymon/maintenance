@@ -141,9 +141,28 @@ var createGameScene = function() {
                   item = new Drink();
                 } 
                 //var item = new Item1();
-                var item2 = new Founder();
-                item.moveTo( SCREEN_WIDTH + 30, 360 );
+		var item2;
+		
+		console.log(global.progress);
+		if ( Math.floor(global.progress * 100) == 25 ) {
+		    item2 = new Founder1();
+		    console.log('ふぁうんだーif');
+		}else if (Math.floor(global.progress * 100) == 50 ) {
+		    item2 = new Founder2();
+		}else if (Math.floor(global.progress * 100) == 75 ) {
+		    item2 = new Founder3();
+		} else {
+		}
+		
+		
+                item.moveTo( SCREEN_WIDTH + 30, PLAYER_POS_Y - PLAYER_JUMP + randInt( 30 , PLAYER_HEIGHT * 2 ));
                 scene.addChild( item );
+		console.log('停止', item2);
+		if (item2) {
+		    item2.moveTo( SCREEN_WIDTH + 30, PLAYER_POS_Y - PLAYER_JUMP + randInt( 30 , PLAYER_HEIGHT * 2 ));
+		    scene.addChild( item2 );
+		}
+		console.log('停止', 2);
             }
 
         	// TODO 障害物生成•表示
