@@ -16,11 +16,14 @@
 <link rel="shortcut icon" href="//static-picomon.s3.amazonaws.com/static/front/img/favicon.ico" type="image/x-icon">
 <link rel="icon" href="//static-picomon.s3.amazonaws.com/static/front/img/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript" src="./js/enchant.js"></script>
 <script type="text/javascript" src="./js/main.js"></script>
+<script type="text/javascript" src="./js/progress.js"></script>
 <script type="text/javascript" src="./js/scene_game.js"></script>
 <script type="text/javascript" src="./js/scene_title.js"></script>
 <script type="text/javascript" src="./js/player.js"></script>
+<script type="text/javascript" src="./js/founder.js"></script>
 <script type="text/javascript" src="./js/wall.js"></script>
 <script type="text/javascript" src="./js/item.js"></script>
 </head>
@@ -62,8 +65,8 @@
   <div id="footer">
     <p id="copyright"> Copyright &copy; 2013 picomon.inc All Rights Reserverd. </p>
   </div>
-  <!--<div id="overlay" style=""></div> -->
-  <div id="shareScoreOverlay" style="">
+  <div id="overlay" style="display: none;"></div>
+  <div id="shareScoreOverlay" style="display: none;">
     <p id="shareScoreClose"><img src="//static-picomon.s3.amazonaws.com/static/front/img/close.png" alt="close"></p>
     <div class="shareScoreInnerArea">
       <p class="scoreText"><!--おめでとう！<br>
