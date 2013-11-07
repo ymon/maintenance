@@ -28,8 +28,10 @@ var Wall = Class.create( Sprite, {
 
         // 衝突判定
         if ( this.within( global.player, WALL1_HIT_LENGTH ) ) {
+	    //createGameoverScene();
             var e = new enchant.Event("hit");
             this.dispatchEvent(e);
+
         }
 
         // 削除処理
