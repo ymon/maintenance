@@ -1,19 +1,20 @@
 enchant();
 
-    var ITEM1_WIDTH      = 58;   // ドリンク,ハート幅 
-    var ITEM1_HEIGHT     = 58;   // ドリンク,ハート高
-    var ITEM2_WIDTH      = 50;   // ファウンダー幅
-    var ITEM2_HEIGHT     = 100;   // ファウンダー高さ
-    var ITEM1_FRAME      = 40;
-    var ITEM2_FRAME      = 40;
-    var HEART_POINT      = 50;  // ハートのポイント
-    var HEART_FRAME      = 29;   // ハートのフレームインデックス
-    var DRINK_POINT     = 100; // ドリンクのポイント
-    var DRINK_FRAME     = 64;   // ドリンクのフレームインデックス    
-    var FOUNDER_POINT   = 1000; // ファウンダーのポイント
-    var FOUNDER_FRAME   = 64;   // ファウンダーのフレームインデックス
-    var ITEM_SPEED = GAME_SPEED * -1;
-    var ITEM_HIT_LENGTH = 29;  //アイテムの半径
+    var ITEM1_WIDTH		= 58;   // ドリンク,ハート幅 
+    var ITEM1_HEIGHT		= 58;   // ドリンク,ハート高
+    var ITEM2_WIDTH		= 50;   // ファウンダー幅
+    var ITEM2_HEIGHT		= 100;   // ファウンダー高さ
+    var ITEM1_FRAME		= 40;
+    var ITEM2_FRAME		= 40;
+    var HEART_POINT		= 50;  // ハートのポイント
+    var HEART_FRAME		= 29;   // ハートのフレームインデックス
+    var DRINK_POINT  	   	= 100; // ドリンクのポイント
+    var DRINK_FRAME  	   	= 64;   // ドリンクのフレームインデックス    
+    var FOUNDER_POINT		= 1000; // ファウンダーのポイント
+    var ITEM_SPEED 		= GAME_SPEED;
+    var FOUNDER_FRAME		= 64;   // ファウンダーのフレームインデックス
+    var ITEM_HIT_LENGTH		= 42;  //アイテムの半径
+    var ITEM_HIT_LENGTH		= 75;
 
 /*
  * アイテム
@@ -21,13 +22,12 @@ enchant();
 var Item = Class.create(Sprite, {
     // 初期化処理
     initialize: function() {
-        Sprite.call(this, ITEM1_WIDTH, ITEM1_HEIGHT);
-        //this.image = global.game.assets[IMAGE_ITEM1];
+        Sprite.call( this, ITEM1_WIDTH, ITEM1_HEIGHT);
     },
     // 更新処理
     onenterframe: function() {
         // 移動
-        this.x += ITEM_SPEED;
+        this.x -= ITEM_SPEED;
                
         
         // 衝突判定
@@ -53,12 +53,13 @@ var Itemfounder = Class.create(Sprite, {
     // 更新処理
     onenterframe: function() {
         // 移動
-        this.x += ITEM_SPEED;
+        this.x -= ITEM_SPEED;
 	console.log('ファウンダー');
         
         // 衝突判定
-        if (this.intersect(global.player)) {
+        if (this.within( global.player, ITEM_HIT_LENGTH )) {
             // ヒットイベントを発行する
+	    console.log('hitif');
             var e = new enchant.Event("hit");
             this.dispatchEvent(e);
         }
@@ -67,6 +68,7 @@ var Itemfounder = Class.create(Sprite, {
     // ヒット時処理
     onhit: function() {
         this.parentNode.removeChild(this);
+	console.log('hitonhit');
     
     }
 });
@@ -80,7 +82,7 @@ var Itemfounder = Class.create(Sprite, {
 var Heart = Class.create(Item, {
     // 初期化処理
     initialize: function() {
-        Item.call(this);
+        Item.call(this );
         this.frame = HEART_FRAME;
         this.image = global.game.assets[IMAGE_ITEM1];
     },
@@ -102,7 +104,7 @@ var Heart = Class.create(Item, {
 var Drink = Class.create(Item, {
     // 初期化処理
     initialize: function() {
-        Item.call(this);
+	Item.call( this );
         this.image = global.game.assets[IMAGE_ITEM2];
         this.frame = DRINK_FRAME;
     },
@@ -124,24 +126,24 @@ var Drink = Class.create(Item, {
 var Founder1 = Class.create(Itemfounder, {
     // 初期化処理
     initialize: function() {
-        Item.call(this);
+        Itemfounder.call(this);
 	this.image = global.game.assets[IMAGE_ITEM3];
         this.frame = FOUNDER_FRAME;
 	console.log('ふぁうんだー');
     },
     // ヒット時処理
     onhit: function() {
-        console.log('ふぁうんだーhit');
+	this.parentNode.removeChild(this);
         Item.call(this);
-    global.score += FOUNDER_POINT;
-    global.founder = 2;
+	global.score += FOUNDER_POINT;
+	global.founder = global.founder + 2;
     }
 });
     //大前さんFOUNDER
 var Founder2 = Class.create(Itemfounder, {
     // 初期化処理
     initialize: function() {
-        Item.call(this);
+        Itemfounder.call(this);
 	global.game.assets[IMAGE_ITEM4];
         this.frame = FOUNDER_FRAME;
     },
@@ -150,7 +152,7 @@ var Founder2 = Class.create(Itemfounder, {
         
         Item.call(this);
     global.score += FOUNDER_POINT;
-    global.founder = 4;
+    global.founder = global.founder + 4;
     }
 });
 
@@ -158,7 +160,7 @@ var Founder2 = Class.create(Itemfounder, {
 var Founder3 = Class.create(Itemfounder, {
     // 初期化処理
     initialize: function() {
-        Item.call(this);
+        Itemfounder.call(this);
 	global.game.assets[IMAGE_ITEM5];
         this.frame = FOUNDER_FRAME;
     },
@@ -167,7 +169,7 @@ var Founder3 = Class.create(Itemfounder, {
         
         Item.call(this);
     global.score += FOUNDER_POINT;
-    global.founder = 1;
+    global.founder = global.founder + 1;
     }
 });
 

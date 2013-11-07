@@ -24,8 +24,8 @@ var Wall = Class.create(Sprite, {
 
         // 衝突判定
         if ( this.within( global.player, WALL_HIT_LENGTH ) ) {
-        	// TODO ゲームオーバー処理
-		createGameoverScene();
+        	// ゲームオーバー処理
+		//createGameoverScene();
             console.log( "HIT!" );
         }
 
