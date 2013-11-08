@@ -8,12 +8,6 @@ var WALL3_WIDTH     = 58;
 var WALL3_HEIGHT    = 58;
 var WALL3_HIT_LENGTH = 50;
 
-/*
-item 58 58
-barrier 58 58 (corn)
-81 67
-*/
-
 var Wall = Class.create( Sprite, {
     // 初期化処理
     initialize : function( width, height ) {
@@ -40,7 +34,7 @@ var Wall = Class.create( Sprite, {
     // ヒット時処理
     onhit: function( e ) {
         global.player.state = 2;
-	createGameoverScene(); //仮追加
+        createjs.Sound.createInstance("dead").play();
     }
 });
 

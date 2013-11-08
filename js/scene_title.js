@@ -13,7 +13,7 @@ var createTitleScene = function() {
 	scene.addChild(startImage);                  // シーンにラベルに追加
 		
 	startImage.addEventListener(Event.TOUCH_START, function(e) { // シーンにタッチイベントを設定
-				
+
 		global.game.replaceScene( createGameScene() );
 		
 	});

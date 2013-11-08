@@ -35,6 +35,7 @@ var Player = Class.create( Sprite, {
 		}
 	},
 	jump : function() {
+		createjs.Sound.createInstance("jump").play();
 		this.tl.moveBy( 0, -1 * PLAYER_JUMP, PLAYER_JUMP_TIME, enchant.Easing.CUBIC_EASEOUT )
 			   .moveBy( 0, PLAYER_JUMP, PLAYER_JUMP_TIME, enchant.Easing.CUBIC_EASEIN );
 	},
