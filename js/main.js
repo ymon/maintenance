@@ -35,6 +35,7 @@ var IMAGE_PROGRESS_BACK    = "./img/img_progress02.png";
 var IMAGE_PROGRESS_BOX     = "./img/img_bubble.png";
 var IMAGE_START            = "./img/img_start.png";
 var ASSETS = [
+
 	IMAGE_PLAYER,
 	IMAGE_FOUNDER_KASHIMA,
 	IMAGE_FOUNDER_KITAZAWA,
@@ -58,7 +59,6 @@ var ASSETS = [
 	IMAGE_START
 
 ];
-//var IMAGE_= "";
 var SCREEN_WIDTH      = 960;		// スクリーン幅
 var SCREEN_HEIGHT     = 640;		// スクリーン高さ
 var BACKGROUND_WIDTH  = 960 * 3;	// 背景幅
@@ -78,6 +78,33 @@ var global = {
 	progress : 0,
 	keybindFlag : true
 };
+
+
+global.sound = {
+	bgm   : createjs.Sound.createInstance( SOUND_BGM ),
+	clear : createjs.Sound.createInstance( SOUND_CLEAR ),
+	dead  : createjs.Sound.createInstance( SOUND_DEAD ),
+	item  : createjs.Sound.createInstance( SOUND_ITEM ),
+	jump  : createjs.Sound.createInstance( SOUND_JUMP ),
+	start : createjs.Sound.createInstance( SOUND_START ),
+	mute  : function() {
+		this.bgm.setMute( true );
+		this.clear.setMute( true );
+		this.dead.setMute( true );
+		this.item.setMute( true );
+		this.jump.setMute( true );
+		this.start.setMute( true );
+	},
+	unmute  : function() {
+		this.bgm.setMute( false );
+		this.clear.setMute( false );
+		this.dead.setMute( false );
+		this.item.setMute( false );
+		this.jump.setMute( false );
+		this.start.setMute( false );
+	}
+};
+
 
 /*
  * 汎用処理
@@ -121,15 +148,6 @@ var gameInit = function() {
 	];
 	queue.loadManifest( manifest, true );
 	queue.addEventListener('complete', gameStart );
-/* 
-	function handleFileLoad(event){
-		var item = event.item;
-		var type = item.type;
-		if(createjs.LoadQueue.SOUND === type){
-			startSound(item.id);
-		}
-	}
-*/
 };
 
 var gameStart = function() {
@@ -139,44 +157,21 @@ var gameStart = function() {
 	global.game.preload( ASSETS );
 	global.game.fps = GAME_FPS;
 	global.game.onload = function() {
+		// サウンドボタン実装
+		var switchSoundElm = document.getElementById( 'switchSound' );
+		switchSoundElm.onclick = function() {
+			if ( switchSoundElm.checked == true ){
+				global.sound.unmute();
+			}else {
+				global.sound.mute();
+			}
+		}
 		global.game.replaceScene( createTitleScene() );
-//		global.game.replaceScene( createGameScene() );
 	};
-
-	// 音声ファイルのインスタンスを作成
-	createjs.Sound.createInstance("bgm").play( "none", 0, -1 );
 
 	debug.log( "game start" );
 	global.game.start();
 
 };
-/*
-	function setupSound () {
-		var isSound        = getCookie( 'sound' );
-		var soundElm       = document.getElementById( 'sound' );
-		var switchSoundElm = document.getElementById( 'switchSound' );
-		soundElm.onclick = function ( event ) {
-			if ( soundElm.getAttribute( 'data-status' ) === 'on' ) {
-				setCookie( 'sound', 'off', 1, '/', 1 );
-				createjs.Sound.setMute( true );
-				soundElm.setAttribute( 'data-status', 'off' );
-				switchSoundElm.checked = false;
-				return false;
-			}
-			setCookie( 'sound', 'on', 1, '/', 1 );
-			createjs.Sound.setMute( false );
-			soundElm.setAttribute( 'data-status', 'on' );
-			switchSoundElm.checked = true;
-			return false;
-		};
-		if ( isSound === null || isSound === 'on' ) {
-			createjs.Sound.setMute( false );
-			soundElm.setAttribute( 'data-status', 'on' );
-			switchSoundElm.checked = true;
-		} else if ( isSound === 'off' ) {
-			createjs.Sound.setMute( true );
-			soundElm.setAttribute( 'data-status', 'off' );
-			switchSoundElm.checked = false;
-		}
-	}
-*/
+
+

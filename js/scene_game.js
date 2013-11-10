@@ -6,24 +6,15 @@ var createGameScene = function() {
 	var scene = new Scene();
 	scene.backgroundColor = BACKGROUND_COLLOR;
 
+    // Spaceキーを登録
     if ( global.keybindFlag ){
         global.game.keybind( 32, "space" );
-        global.game.addEventListener("spacebuttondown", function() {
-            if( global.player.state == 1 && !global.player.isJump() ){
-                global.player.jump();
-                if ( kashimaPet.exist )
-                    kashimaPet.jump();
-                if ( kitazawaPet.exist )
-                    kitazawaPet.jump();
-                if ( ohmaePet.exist )
-                    ohmaePet.jump();
-            }
-        });
+        global.game.addEventListener( "spacebuttondown", function() { scene.ontouchstart(); });
         global.keybindFlag = false;
     }
 
     // startを再生
-    var instance = createjs.Sound.createInstance( "start" ).play();
+    global.sound.start.play();
 
     // プレイヤーを作成
     global.player = new Player();
@@ -36,6 +27,8 @@ var createGameScene = function() {
     // ファウンダーアイテムの個数をカウント
     var founderItemCount = 0;
 
+    // クリア後のウィンドウ遅延用
+    // onenterframeで使用
     var clearCount = 0;
 
     // グローバル変数の初期化
@@ -73,6 +66,7 @@ var createGameScene = function() {
                             background.image = global.game.assets[ IMAGE_BACKGROUND4 ];
                             background.state = 4;
                         }
+                        break;
                 }
             	background.moveTo( 0, 0 );
             }
@@ -86,8 +80,8 @@ var createGameScene = function() {
             if ( background.state == 4 && this.x < -960 ){
                 background.move = false;
                 global.player.state = 3;
-                createjs.Sound.createInstance("bgm").stop();
-                createjs.Sound.createInstance("clear").play();
+                global.sound.bgm.stop();
+                global.sound.clear.play();
             }
 
         }
@@ -182,7 +176,7 @@ var createGameScene = function() {
                     this.parentNode.removeChild(this);
                     global.score += FOUNDER_POINT;
                     kitazawaPet.insert( ++global.founder );
-                    createjs.Sound.createInstance("item").play();
+                    global.sound.item.play();
                 };
                 item2.moveTo( SCREEN_WIDTH + 30, PLAYER_POS_Y - PLAYER_JUMP - PLAYER_HEIGHT * 0.8 );
                 scene.addChild( item2 );
@@ -193,7 +187,7 @@ var createGameScene = function() {
                     this.parentNode.removeChild(this);
                     global.score += FOUNDER_POINT;
                     ohmaePet.insert( ++global.founder );
-                    createjs.Sound.createInstance("item").play();
+                    global.sound.item.play();
                 };
                 item2.moveTo( SCREEN_WIDTH + 30, PLAYER_POS_Y - PLAYER_JUMP - PLAYER_HEIGHT * 0.8 );
                 scene.addChild( item2 );
@@ -204,7 +198,7 @@ var createGameScene = function() {
                     this.parentNode.removeChild(this);
                     global.score += FOUNDER_POINT;
                     kashimaPet.insert( ++global.founder );
-                    createjs.Sound.createInstance("item").play();
+                    global.sound.item.play();
                 };
                 item2.moveTo( SCREEN_WIDTH + 30, PLAYER_POS_Y - PLAYER_JUMP - PLAYER_HEIGHT * 0.8 );
                 scene.addChild( item2 );
@@ -222,12 +216,16 @@ var createGameScene = function() {
                 wall.moveTo( SCREEN_WIDTH + 30, 390 );
                 scene.addChild( wall );
             }
-            if ( global.game.frame % 400 == 140 ) {
+            if ( global.game.frame % 400 == 240 ) {
                 var wall = new Wall3();
                 wall.moveTo( SCREEN_WIDTH + 30, 390 - PLAYER_JUMP );
                 scene.addChild( wall );
             }
-
+            if ( global.game.frame % 400 == 120 ) {
+                var wall = new Wall3();
+                wall.moveTo( SCREEN_WIDTH + 30, 390 - PLAYER_JUMP / 2 );
+                scene.addChild( wall );
+            }
 
             // スコアを増やす
             if (global.game.frame % 2 == 1 ){
@@ -239,16 +237,16 @@ var createGameScene = function() {
 
         } else if ( global.player.state == 2 ) {
             // 死んだとき
-                global.player.tl.moveBy( 0, -400, 100, enchant.Easing.LINEAR );
+                global.player.tl.moveBy( 0, -400, 80, enchant.Easing.LINEAR );
                 if ( global.player.y < 0 ) {
-                    createjs.Sound.createInstance("bgm").stop();
+                    global.sound.bgm.stop();
                     createGameoverScene();
                 }
         }else if ( global.player.state == 3 ){
             clearCount++;
-            if ( clearCount >= 180 ){
-                   createjs.Sound.createInstance("bgm").stop();
-                   createGameoverScene();
+            if ( clearCount >= 180 ){   
+                global.sound.bgm.stop();
+                createGameoverScene();
             }
         }
 

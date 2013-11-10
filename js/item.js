@@ -32,7 +32,7 @@ var Item = Class.create(Sprite, {
                
         
         // 衝突判定
-        if (this.within( global.player, ITEM_HIT_LENGTH )) {
+        if ( this.within( global.player, ITEM_HIT_LENGTH ) && global.player.state == 1 ) {
             // ヒットイベントを発行する
             var e = new enchant.Event("hit");
             this.dispatchEvent(e);
@@ -57,7 +57,7 @@ var Itemfounder = Class.create(Sprite, {
         this.x += ITEM_SPEED;
         
         // 衝突判定
-        if (this.within( global.player, ITEM2_HIT_LENGTH)) {
+        if ( this.within( global.player, ITEM2_HIT_LENGTH)  && global.player.state == 1 ) {
             // ヒットイベントを発行する
             var e = new enchant.Event("hit");
             this.dispatchEvent(e);
@@ -84,7 +84,7 @@ var Heart = Class.create(Item, {
         // スコアアップ生成
         Item.call(this)
         global.score += HEART_POINT;
-        createjs.Sound.createInstance("item").play();
+        global.sound.item.play();
     }
 });
 
@@ -104,7 +104,7 @@ var Drink = Class.create(Item, {
     onhit: function() {        
         Item.call(this);
         global.score += DRINK_POINT;
-        createjs.Sound.createInstance("item").play();
+        global.sound.item.play();
     }
 });
 

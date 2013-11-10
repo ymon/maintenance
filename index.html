@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="content-language" content="ja">
+<meta charset="utf-8">
+<title>メンテナンス中です。 | ピコもん株式会社</title>
+<meta http-equiv="keywords" content="ピコもん,キャラクター,ピコ,Webマーケティング,マーケティングサービス,大前創希,キャラクター開発,Webサイトの住人,中の人がいないサービス,キャラクタービジネス,ピコモン,ぴこもん,picomon,pikomon">
+<meta http-equiv="description" content="ただいまピコもんはメンテナンス中です。メンテナンスゲームをお楽しみください。">
+<meta property="og:title" content="ピコもん株式会社">
+<meta property="og:description" content="ただいまピコもんはメンテナンス中です。メンテナンスゲームをお楽しみください。">
+<meta property="og:url" content="http://picomon.jp">
+<meta property="og:image" content="http://static-picomon.s3.amazonaws.com/static/front/img/ogp.jpg">
+<meta name="msapplication-TileColor" content="#cbf0ff"/>
+<meta name="msapplication-TileImage" content="http://static-picomon.s3.amazonaws.com/static/front/img/ogp.jpg"/>
+<meta property="og:site_name" content="ピコもん">
+<link rel="shortcut icon" href="//static-picomon.s3.amazonaws.com/static/front/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="//static-picomon.s3.amazonaws.com/static/front/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="./js/enchant.js"></script>
+<script type="text/javascript" src="./js/preloadjs-0.4.0.min.js"></script>
+<script type="text/javascript" src="./js/soundjs-0.5.0.min.js"></script>
+<script type="text/javascript" src="./js/main.js"></script>
+<script type="text/javascript" src="./js/progress.js"></script>
+<script type="text/javascript" src="./js/scene_game.js"></script>
+<script type="text/javascript" src="./js/scene_title.js"></script>
+<script type="text/javascript" src="./js/player.js"></script>
+<script type="text/javascript" src="./js/founder.js"></script>
+<script type="text/javascript" src="./js/wall.js"></script>
+<script type="text/javascript" src="./js/item.js"></script>
+</head>
+<body>
+<div id="wrapper">
+  <ul id="nav">
+    <li class="logo"><a href="#"><img src="//static-picomon.s3.amazonaws.com/static/front/img/logo.gif" alt="ピコもん" width="223" height="40" ></a></li>
+    <li><a href="#">SORRY,</a></li>
+    <li><a href="#">CURRENTLY</a></li>
+    <li><a href="#">UNDERGOING</a></li>
+    <li><a href="#">MAINTENANCE.</a></li>
+    <!-- / #nav -->
+  </ul>
+  <div id="error">
+    <p>このブラウザはメンテナンスゲームを利用出来ません</p>
+  </div>
+  <div id="mobile">
+    <p>このブラウザはメンテナンスゲームを利用出来ません</p>
+  </div>
+   <!-- <div id="canvasShowArea">
+    <canvas id="gameCanvas" width="960px" height="640px"></canvas> -->
+    <div id="enchant-stage" style="width:960px;height:640px"></div>
+  </div>
+  <div class="information">
+    <div class="onoffswitch" id="sound">
+      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switchSound" checked>
+      <label class="onoffswitch-label" for="switchSound">
+      <div class="onoffswitch-inner"></div>
+      <div class="onoffswitch-switch"></div>
+      </label>
+    </div>
+    <p id="leadMessage">現在、ピコもんはメンテナンス中です。<br>
+      <span>パンダをうまくゴールまで移動させてピコもんのメンテナンスを成功させてください！</span> </p>
+    <p class="key"> Space key : ジャンプ<br>
+      アイテムととると進捗ポイント（スコア）がアップします。<br>
+      画面上で各一回しか出現しないファウンダーをゲットすると追尾してメンテナンスを助けてくれます。<br>（つまり、進捗ポイントがすごいアップします）<br>
+      <span class="mt_10"><a href="https://soundcloud.com/hizmi" target="_blank">Music by hizmi</a></span> </p>
+  </div>
+  <div id="footer">
+    <p id="copyright"> Copyright &copy; 2013 picomon.inc All Rights Reserverd. </p>
+  </div>
+  <div id="overlay" style="display: none;"></div>
+  <div id="shareScoreOverlay" style="display: none;">
+    <p id="shareScoreClose"><img src="//static-picomon.s3.amazonaws.com/static/front/img/close.png" alt="close"></p>
+    <div class="shareScoreInnerArea">
+      <p class="scoreText"><!--おめでとう！<br>
+        あなたはXXXX進捗ポイントでメンテナンスに成功しました。<br>
+        SNSでみんなに自慢しよう！</p>
+      <p class="scoreText">残念！あなたはメンテナンスに失敗しました。<br>
+        XXXX進捗ポイント獲得。<br>
+        SNSでみんなにアピールしよう！--></p>
+      <div id="replaybuttonArea">
+        <div id="replaybutton">
+          <p>もう一度あそぶ</p>
+        </div>
+      </div>
+      <div class="socialForm"> <a id="twitterShareButton" href="javascript:void(0);"><img src="img/Twitter.png" width="32" height="32"  alt="Tweet"/></a> <a id="facebookShareButton" href="javascript:void(0);"><img src="img/Facebook.png" width="32" height="32"  alt="Facebook Share"/></a> </div>
+      
+    </div>
+  </div>
+  <!-- / #wrapper --></div>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-39677274-2', 'picomon.jp');
+ga('send', 'pageview');
+</script>
+</body>
+</html>

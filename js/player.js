@@ -31,11 +31,11 @@ var Player = Class.create( Sprite, {
 				this.frame += 6;
 				break;
 			default:
-				console.log("Error");
+				throw "GameStateError state:" + global.player.state;
 		}
 	},
 	jump : function() {
-		createjs.Sound.createInstance("jump").play();
+		global.sound.jump.play();
 		this.tl.moveBy( 0, -1 * PLAYER_JUMP, PLAYER_JUMP_TIME, enchant.Easing.CUBIC_EASEOUT )
 			   .moveBy( 0, PLAYER_JUMP, PLAYER_JUMP_TIME, enchant.Easing.CUBIC_EASEIN );
 	},

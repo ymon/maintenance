@@ -21,7 +21,7 @@ var Wall = Class.create( Sprite, {
         	this.x -= GAME_SPEED;
 
         // 衝突判定
-        if ( this.within( global.player, WALL1_HIT_LENGTH ) ) {
+        if ( this.within( global.player, WALL1_HIT_LENGTH ) && global.player.state == 1  ) {
             var e = new enchant.Event("hit");
             this.dispatchEvent(e);
         }
@@ -34,7 +34,7 @@ var Wall = Class.create( Sprite, {
     // ヒット時処理
     onhit: function( e ) {
         global.player.state = 2;
-        createjs.Sound.createInstance("dead").play();
+        global.sound.dead.play();
     }
 });
 
@@ -67,7 +67,7 @@ var Wall3 = Class.create( Wall, {
         this.rotate(-8);
 
         // 衝突判定
-        if ( this.within( global.player, WALL3_HIT_LENGTH ) ) {
+        if ( this.within( global.player, WALL3_HIT_LENGTH ) && global.player.state == 1 ) {
             var e = new enchant.Event("hit");
             this.dispatchEvent(e);
         }
