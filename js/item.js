@@ -1,21 +1,19 @@
-enchant();
 
-    var ITEM1_WIDTH     	= 58;   // ドリンク,ハート幅 
-    var ITEM1_HEIGHT    	= 58;   // ドリンク,ハート高
-    var ITEM2_WIDTH     	= 81;   // ファウンダー幅
-    var ITEM2_HEIGHT    	= 140;   // ファウンダー高さ
-    var ITEM1_FRAME     	= 40;
-    var ITEM2_FRAME		= 40;
-    var HEART_POINT		= 50;  // ハートのポイント
-    var HEART_FRAME		= 29;   // ハートのフレームインデックス
-    var DRINK_POINT		= 100; // ドリンクのポイント
-    var DRINK_FRAME     	= 64;   // ドリンクのフレームインデックス    
-    var FOUNDER_POINT   	= 1000; // ファウンダーのポイント
-    var FOUNDER_FRAME   	= 64;   // ファウンダーのフレームインデックス
-    var ITEM_SPEED 		= GAME_SPEED * -1;
-    var ITEM_HIT_LENGTH 	= 40;  //アイテムの半径
-    var ITEM2_HIT_LENGTH	= 70;
-
+    var ITEM1_WIDTH      = 58;   // ドリンク,ハート幅 
+    var ITEM1_HEIGHT     = 58;   // ドリンク,ハート高
+    var ITEM2_WIDTH      = 81;   // ファウンダー幅
+    var ITEM2_HEIGHT     = 140;   // ファウンダー高さ
+    var ITEM1_FRAME      = 40;
+    var ITEM2_FRAME      = 40;
+    var HEART_POINT	     = 50;  // ハートのポイント
+    var HEART_FRAME	     = 29;   // ハートのフレームインデックス
+    var DRINK_POINT	     = 100; // ドリンクのポイント
+    var DRINK_FRAME      = 64;   // ドリンクのフレームインデックス    
+    var FOUNDER_POINT    = 1000; // ファウンダーのポイント
+    var FOUNDER_FRAME    = 64;   // ファウンダーのフレームインデックス
+    var ITEM_SPEED 		 = GAME_SPEED * -1;
+    var ITEM_HIT_LENGTH  = 40;  //アイテムの半径
+    var ITEM2_HIT_LENGTH = 70;
 
 /*
  * アイテム
@@ -34,7 +32,7 @@ var Item = Class.create(Sprite, {
                
         
         // 衝突判定
-        if (this.within( global.player, ITEM_HIT_LENGTH )) {
+        if ( this.within( global.player, ITEM_HIT_LENGTH ) && global.player.state == 1 ) {
             // ヒットイベントを発行する
             var e = new enchant.Event("hit");
             this.dispatchEvent(e);
@@ -57,12 +55,10 @@ var Itemfounder = Class.create(Sprite, {
         // 移動
 	if (global.player.state == 1)
         this.x += ITEM_SPEED;
-	console.log('ファウンダー');
         
         // 衝突判定
-        if (this.within( global.player, ITEM2_HIT_LENGTH)) {
+        if ( this.within( global.player, ITEM2_HIT_LENGTH)  && global.player.state == 1 ) {
             // ヒットイベントを発行する
-	    console.log('hitif');
             var e = new enchant.Event("hit");
             this.dispatchEvent(e);
         }
@@ -87,7 +83,8 @@ var Heart = Class.create(Item, {
     onhit: function(e) {
         // スコアアップ生成
         Item.call(this)
-    global.score += HEART_POINT;
+        global.score += HEART_POINT;
+        global.sound.item.play();
     }
 });
 
@@ -104,12 +101,10 @@ var Drink = Class.create(Item, {
         this.frame = DRINK_FRAME;
     },
     // ヒット時処理
-    onhit: function() {
-        
+    onhit: function() {        
         Item.call(this);
-    global.score += DRINK_POINT;
-    
-    
+        global.score += DRINK_POINT;
+        global.sound.item.play();
     }
 });
 
@@ -122,31 +117,17 @@ var Founder1 = Class.create(Itemfounder, {
     // 初期化処理
     initialize: function() {
         Itemfounder.call(this);
-	this.image = global.game.assets[IMAGE_ITEM3];
+    	this.image = global.game.assets[IMAGE_ITEM3];
         this.frame = FOUNDER_FRAME;
-    },
-    // ヒット時処理
-    onhit: function() {
-        Item.call(this);	
-	this.parentNode.removeChild(this);
-	global.score += FOUNDER_POINT;
-	global.founder = global.founder + 2;
     }
 });
     //大前さんFOUNDER
 var Founder2 = Class.create(Itemfounder, {
     // 初期化処理
     initialize: function() {
-        Itemfounder.call(this);	
-	this.image = global.game.assets[IMAGE_ITEM4];
+        Itemfounder.call(this);
+    	this.image = global.game.assets[IMAGE_ITEM4];
         this.frame = FOUNDER_FRAME;
-    },
-    // ヒット時処理
-    onhit: function() {    
-        Item.call(this);
-	this.parentNode.removeChild(this);
-	global.score += FOUNDER_POINT;
-	global.founder = global.founder + 4;
     }
 });
 
@@ -155,16 +136,8 @@ var Founder3 = Class.create(Itemfounder, {
     // 初期化処理
     initialize: function() {
         Itemfounder.call(this);
-	this.image = global.game.assets[IMAGE_ITEM5];
+        this.image = global.game.assets[IMAGE_ITEM5];
         this.frame = FOUNDER_FRAME;
-    },
-    // ヒット時処理
-    onhit: function() {
-        
-        Item.call(this);
-	this.parentNode.removeChild(this);
-	global.score += FOUNDER_POINT;
-	global.founder = 1;
     }
 });
 

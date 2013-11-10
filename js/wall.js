@@ -8,12 +8,6 @@ var WALL3_WIDTH     = 58;
 var WALL3_HEIGHT    = 58;
 var WALL3_HIT_LENGTH = 50;
 
-/*
-item 58 58
-barrier 58 58 (corn)
-81 67
-*/
-
 var Wall = Class.create( Sprite, {
     // 初期化処理
     initialize : function( width, height ) {
@@ -27,7 +21,7 @@ var Wall = Class.create( Sprite, {
         	this.x -= GAME_SPEED;
 
         // 衝突判定
-        if ( this.within( global.player, WALL1_HIT_LENGTH ) ) {
+        if ( this.within( global.player, WALL1_HIT_LENGTH ) && global.player.state == 1  ) {
             var e = new enchant.Event("hit");
             this.dispatchEvent(e);
         }
@@ -40,7 +34,7 @@ var Wall = Class.create( Sprite, {
     // ヒット時処理
     onhit: function( e ) {
         global.player.state = 2;
-	createGameoverScene(); //仮追加
+        global.sound.dead.play();
     }
 });
 
@@ -73,7 +67,7 @@ var Wall3 = Class.create( Wall, {
         this.rotate(-8);
 
         // 衝突判定
-        if ( this.within( global.player, WALL3_HIT_LENGTH ) ) {
+        if ( this.within( global.player, WALL3_HIT_LENGTH ) && global.player.state == 1 ) {
             var e = new enchant.Event("hit");
             this.dispatchEvent(e);
         }

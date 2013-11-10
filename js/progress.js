@@ -33,15 +33,19 @@
     // 進捗バーを表示
     var ProgressBar = Class.create( Sprite, {
         initialize : function() {
-            Sprite.call( this, 1, 53 );
-            this.image = global.game.assets[ IMAGE_PROGRESS_BAR ];
-            this.frame = 0;
-            this.moveTo( 510, 570 - 15 );
+            var barSizeX = Math.floor( global.progress * 293 ) + 10;
+            Sprite.call( this, barSizeX, 23 );
+            var surf = new Surface(100, 100);
+            surf.context.beginPath();
+            surf.context.fillStyle = 'rgba(132, 204, 201, 1.0)';
+            surf.context.fillRect(0, 0, barSizeX, 23);
+            this.image = surf;
+            this.moveTo( 510, 574 );
         },
         onenterframe : function() {
-            this.image = global.game.assets[ IMAGE_PROGRESS_BAR ];
-            this.scale( 1, 1 );
-            this.scale( Math.floor( game.global.progress * 293 ) + 1, 1);
+            var parent = this.parentNode;
+            parent.removeChild( this );
+            parent.addChild( new ProgressBar() );
         }
     });
 
